@@ -1,0 +1,368 @@
+.login-page {
+
+  min-height: 100vh;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+  background: #03070c;
+
+  padding: 30px;
+}
+
+
+/* BACKGROUND */
+
+.login-background {
+
+  position: absolute;
+
+  width: 700px;
+  height: 700px;
+
+  top: -300px;
+  right: -150px;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(25, 130, 255, 0.22),
+      transparent 65%
+    );
+
+  pointer-events: none;
+}
+
+
+/* CARD */
+
+.login-card {
+
+  position: relative;
+
+  z-index: 2;
+
+  width: 450px;
+
+  padding: 45px;
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(18, 27, 39, 0.96),
+      rgba(6, 11, 17, 0.96)
+    );
+
+  border: 1px solid rgba(255,255,255,0.10);
+
+  box-shadow:
+    0 40px 100px rgba(0,0,0,0.6);
+}
+
+
+/* LOGO */
+
+.campus-logo {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  margin-bottom: 55px;
+}
+
+.logo-icon {
+
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #167cff;
+
+  box-shadow:
+    0 10px 30px rgba(22,124,255,0.30);
+}
+
+.campus-logo h2 {
+
+  font-size: 21px;
+
+  letter-spacing: 3px;
+}
+
+.campus-logo h2 span {
+
+  color: #3297ff;
+}
+
+.campus-logo p {
+
+  margin-top: 4px;
+
+  font-size: 8px;
+
+  letter-spacing: 2px;
+
+  color: #718096;
+}
+
+
+/* HEADING */
+
+.login-heading {
+
+  margin-bottom: 30px;
+}
+
+.small-title {
+
+  color: #3297ff;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  letter-spacing: 3px;
+
+  margin-bottom: 10px;
+}
+
+.login-heading h1 {
+
+  font-size: 40px;
+
+  line-height: 1.1;
+
+  margin-bottom: 10px;
+}
+
+.login-heading > p:last-child {
+
+  color: #7f8b9b;
+
+  font-size: 14px;
+}
+
+
+/* FORM */
+
+.input-group {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin-bottom: 18px;
+}
+
+.input-group label {
+
+  font-size: 12px;
+
+  color: #aeb8c5;
+
+  font-weight: 600;
+}
+
+.input-group input,
+.input-group select {
+
+  width: 100%;
+
+  padding: 15px;
+
+  border-radius: 9px;
+
+  outline: none;
+
+  border: 1px solid #253241;
+
+  background: #080e16;
+
+  color: white;
+
+  font-size: 14px;
+
+  transition: .25s;
+}
+
+.input-group input::placeholder {
+
+  color: #566272;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+
+  border-color: #2189ff;
+
+  box-shadow:
+    0 0 0 3px rgba(33,137,255,0.08);
+}
+
+
+/* BUTTON */
+
+.login-button {
+
+  width: 100%;
+
+  margin-top: 8px;
+
+  padding: 16px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #1685ff;
+
+  color: white;
+
+  font-size: 13px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  transition: .3s;
+}
+
+.login-button:hover {
+
+  background: #3198ff;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 30px rgba(22,133,255,0.30);
+}
+
+
+/* FOOTER */
+
+.login-footer {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-top: 35px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #1d2733;
+
+  font-size: 8px;
+
+  letter-spacing: 1.5px;
+
+  color: #536071;
+}
+
+.login-footer span:first-child {
+
+  color: #7d8998;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 550px) {
+
+  .login-page {
+    padding: 15px;
+  }
+
+  .login-card {
+    width: 100%;
+    padding: 30px;
+  }
+
+  .login-heading h1 {
+    font-size: 34px;
+  }
+
+  .campus-logo {
+    margin-bottom: 40px;
+  }
+
+}
+
+.login-error {
+  margin-bottom: 15px;
+  padding: 11px 13px;
+  border: 1px solid rgba(224, 106, 106, 0.25);
+  border-radius: 7px;
+  background: rgba(224, 106, 106, 0.08);
+  color: #e06a6a;
+  font-size: 11px;
+  text-align: center;
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-success {
+  margin-bottom: 15px;
+  padding: 11px 13px;
+  border: 1px solid rgba(97, 214, 139, 0.25);
+  border-radius: 7px;
+  background: rgba(97, 214, 139, 0.08);
+  color: #61d68b;
+  font-size: 11px;
+  text-align: center;
+}
+
+.register-link-button {
+  width: 100%;
+  margin-top: 16px;
+  border: none;
+  background: transparent;
+  color: #6f9fd0;
+  font-size: 11px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.register-link-button:hover {
+  color: #3198ff;
+}
+
+.register-link-button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 10px 0;
+  border: none;
+  background: transparent;
+  color: #6f9fd0;
+  font-size: 11px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.register-link-button:hover {
+  color: #3198ff;
+  text-decoration: underline;
+}

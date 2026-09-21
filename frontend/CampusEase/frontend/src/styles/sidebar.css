@@ -1,0 +1,205 @@
+/* =========================================
+   CAMPUS EASE SIDEBAR
+========================================= */
+
+.campus-sidebar {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 245px;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 25px 17px;
+
+  background: #070b11;
+
+  border-right: 1px solid #1d2733;
+
+  z-index: 100;
+}
+
+
+/* LOGO */
+
+.sidebar-logo {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 4px 8px;
+
+  margin-bottom: 30px;
+}
+
+.sidebar-logo-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #1685ff;
+
+  color: white;
+
+  box-shadow:
+    0 8px 25px rgba(22, 133, 255, 0.25);
+}
+
+.sidebar-logo h2 {
+  font-size: 16px;
+
+  letter-spacing: 2px;
+}
+
+.sidebar-logo h2 span {
+  color: #3198ff;
+}
+
+.sidebar-logo p {
+  margin-top: 3px;
+
+  color: #596675;
+
+  font-size: 6px;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* ROLE */
+
+.sidebar-role {
+  padding: 8px 12px;
+
+  margin-bottom: 18px;
+
+  border-radius: 6px;
+
+  background: rgba(49, 152, 255, 0.06);
+
+  color: #3198ff;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* SECTION */
+
+.sidebar-section-title {
+  padding: 0 12px;
+
+  margin-bottom: 9px;
+
+  color: #4f5c6b;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* NAVIGATION */
+
+.sidebar-navigation {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.sidebar-link {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  width: 100%;
+
+  padding: 11px 12px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background: transparent;
+
+  color: #788595;
+
+  font-size: 11px;
+
+  text-align: left;
+
+  transition: 0.2s;
+}
+
+.sidebar-link svg {
+  flex-shrink: 0;
+}
+
+.sidebar-link:hover {
+  background: #0d141d;
+
+  color: #d9e1e9;
+}
+
+.sidebar-link.active {
+  background: rgba(22, 133, 255, 0.10);
+
+  color: #3198ff;
+}
+
+.sidebar-link.active::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  width: 3px;
+  height: 18px;
+
+  border-radius: 0 4px 4px 0;
+
+  background: #1685ff;
+}
+
+
+/* BOTTOM */
+
+.sidebar-bottom {
+  margin-top: auto;
+
+  padding-top: 15px;
+
+  border-top: 1px solid #1a2430;
+}
+
+.logout-link {
+  color: #687585;
+}
+
+.logout-link:hover {
+  color: #e06a6a;
+}
