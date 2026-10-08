@@ -1,107 +1,270 @@
-import { Bot, Send, Sparkles } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import {
+  Bot,
+  Send,
+  Sparkles,
+  Trash2,
+  User,
+  Clock3,
+  GraduationCap,
+} from "lucide-react";
 
-import Sidebar from "../components/Sidebar";
+import api from "../services/api";
 import "../styles/dashboard.css";
 
 function FacultyAI() {
-  return (
-    <>
-      <Sidebar role="faculty" />
+  const [messages, setMessages] = useState([
+    {
+      id: 1,
+      type: "ai",
+      text: "Hello Professor! I am your CampusEase Faculty Assistant. Ask me about your teaching schedule, student attendance, circulars, pending approvals, or campus transport.",
+      time: new Date(),
+    },
+  ]);
 
-      <div className="faculty-dashboard">
-        <div className="faculty-topbar">
+  const [question, setQuestion] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const messagesEndRef = useRef(null);
+
+  const suggestions = [
+    "What classes are scheduled today?",
+    "Show pending student approval requests",
+    "Show the latest campus notices",
+    "What are the campus bus routes?",
+    "Check attendance criteria and guidelines",
+  ];
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [messages, loading]);
+
+  const formatTime = (date) => {
+    return new Date(date).toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  const sendMessage = async (customQuestion = null) => {
+    const text = customQuestion ?? question;
+
+    if (!text.trim() || loading) return;
+
+    const userMessage = {
+      id: Date.now(),
+      type: "user",
+      text: text.trim(),
+      time: new Date(),
+    };
+
+    setMessages((previous) => [...previous, userMessage]);
+    setQuestion("");
+    setLoading(true);
+
+    try {
+      const response = await api.post("/ai/ask", {
+        question: text.trim(),
+      });
+
+      const aiMessage = {
+        id: Date.now() + 1,
+        type: "ai",
+        text: response.data.answer || "I could not generate an answer.",
+        time: new Date(),
+      };
+
+      setMessages((previous) => [...previous, aiMessage]);
+    } catch (error) {
+      console.error("AI Error:", error);
+
+      const errorMessage = {
+        id: Date.now() + 1,
+        type: "ai",
+        text:
+          error.response?.data?.message ||
+          "Unable to connect to CampusEase AI. Please ensure the backend is running.",
+        time: new Date(),
+      };
+
+      setMessages((previous) => [...previous, errorMessage]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
+    }
+  };
+
+  const clearChat = () => {
+    setMessages([
+      {
+        id: Date.now(),
+        type: "ai",
+        text: "Conversation cleared. How can I assist with your academic duties?",
+        time: new Date(),
+      },
+    ]);
+  };
+
+  return (
+    <div className="ai-page">
+      {/* HEADER */}
+      <div className="ai-header">
+        <div className="ai-header-left">
+          <div className="ai-main-icon" style={{ background: "rgba(59, 130, 246, 0.15)", color: "#60a5fa" }}>
+            <GraduationCap size={25} />
+          </div>
+
           <div>
-            <p className="dashboard-label">INTELLIGENT CAMPUS</p>
-            <h1>AI Assistant</h1>
-            <p className="dashboard-description">
-              Get intelligent assistance for academic and campus tasks.
-            </p>
+            <div className="ai-title-row">
+              <h1>Faculty AI Assistant</h1>
+              <span className="ai-status">
+                <span className="ai-status-dot"></span>
+                ONLINE
+              </span>
+            </div>
+            <p>Academic & instructional task intelligence</p>
           </div>
         </div>
 
-        <div className="dashboard-panel faculty-panel">
-          <div className="panel-heading">
-            <div>
-              <p className="panel-label">FACULTY AI</p>
-              <h2>CampusEase Assistant</h2>
+        <button
+          className="ai-clear-button"
+          onClick={clearChat}
+          title="Clear conversation"
+        >
+          <Trash2 size={17} />
+          <span>Clear</span>
+        </button>
+      </div>
+
+      {/* CHAT CONTAINER */}
+      <div className="ai-chat-container">
+        {/* SUGGESTIONS WELCOME */}
+        {messages.length === 1 && (
+          <div className="ai-welcome">
+            <div className="ai-welcome-icon" style={{ color: "#60a5fa" }}>
+              <Sparkles size={27} />
             </div>
 
-            <Bot size={22} />
-          </div>
-
-          <div
-            style={{
-              padding: "25px",
-              borderRadius: "12px",
-              background: "#0b121b",
-              border: "1px solid #1d2936",
-              marginBottom: "18px",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                marginBottom: "12px",
-                color: "#3198ff",
-              }}
-            >
-              <Sparkles size={18} />
-
-              <strong>Faculty AI Assistant</strong>
-            </div>
-
-            <p
-              style={{
-                color: "#dce3eb",
-                fontSize: "14px",
-                lineHeight: "1.7",
-              }}
-            >
-              Hello! I can help with schedules, attendance, student requests,
-              notices, and verified campus information.
+            <h2>How can I assist your teaching today?</h2>
+            <p>
+              Ask questions about lecture schedules, student requests, or select a prompt below:
             </p>
+
+            <div className="ai-suggestions">
+              {suggestions.map((item) => (
+                <button
+                  key={item}
+                  onClick={() => sendMessage(item)}
+                  disabled={loading}
+                >
+                  <Sparkles size={14} />
+                  {item}
+                </button>
+              ))}
+            </div>
           </div>
+        )}
 
-          <div
-            style={{
-              display: "flex",
-              gap: "10px",
-            }}
-          >
-            <input
-              type="text"
-              placeholder="Ask a faculty-related question..."
-              style={{
-                flex: 1,
-                padding: "15px",
-                borderRadius: "9px",
-                border: "1px solid #253241",
-                background: "#080e16",
-                color: "white",
-                outline: "none",
-              }}
-            />
-
-            <button
-              style={{
-                width: "52px",
-                border: "none",
-                borderRadius: "9px",
-                background: "#1685ff",
-                color: "white",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
+        {/* MESSAGES */}
+        <div className="ai-messages">
+          {messages.map((message) => (
+            <div
+              key={message.id}
+              className={`ai-message-row ${
+                message.type === "user"
+                  ? "user-message-row"
+                  : "ai-message-row"
+              }`}
             >
-              <Send size={18} />
-            </button>
-          </div>
+              <div
+                className={`ai-avatar ${
+                  message.type === "user"
+                    ? "user-avatar"
+                    : "assistant-avatar"
+                }`}
+              >
+                {message.type === "user" ? (
+                  <User size={17} />
+                ) : (
+                  <Bot size={17} />
+                )}
+              </div>
+
+              <div className="ai-message-content">
+                <div className="ai-message-name">
+                  {message.type === "user" ? "YOU" : "CAMPUS AI"}
+                </div>
+
+                <div className="ai-message-bubble">
+                  {message.text}
+                </div>
+
+                <div className="ai-message-time">
+                  <Clock3 size={11} />
+                  {formatTime(message.time)}
+                </div>
+              </div>
+            </div>
+          ))}
+
+          {/* TYPING INDICATOR */}
+          {loading && (
+            <div className="ai-message-row">
+              <div className="ai-avatar assistant-avatar">
+                <Bot size={17} />
+              </div>
+
+              <div className="ai-message-content">
+                <div className="ai-message-name">CAMPUS AI</div>
+                <div className="ai-typing">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                  <small>Analyzing campus records...</small>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div ref={messagesEndRef}></div>
         </div>
       </div>
-    </>
+
+      {/* INPUT AREA */}
+      <div className="ai-input-area">
+        <div className="ai-input-wrapper">
+          <textarea
+            value={question}
+            onChange={(event) => setQuestion(event.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Ask about schedules, student approvals, notices..."
+            rows={1}
+            disabled={loading}
+          />
+
+          <button
+            className="ai-send-button"
+            onClick={() => sendMessage()}
+            disabled={!question.trim() || loading}
+          >
+            <Send size={18} />
+          </button>
+        </div>
+
+        <div className="ai-input-footer">
+          <span>Grounded in verified institutional database records.</span>
+          <span>Press Enter to send</span>
+        </div>
+      </div>
+    </div>
   );
 }
 

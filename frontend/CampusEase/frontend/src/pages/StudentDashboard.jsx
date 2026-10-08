@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Bell,
   CalendarDays,
@@ -13,6 +14,7 @@ import Sidebar from "../components/Sidebar";
 import "../styles/dashboard.css";
 
 function StudentDashboard() {
+  const navigate = useNavigate();
   return (
     <>
       {/* SIDEBAR */}
@@ -261,25 +263,25 @@ function StudentDashboard() {
 
             <div className="service-grid">
 
-              <button className="service-card">
+              <button className="service-card" onClick={() => navigate("/student/approvals")}>
                 <FileText size={22} />
                 <span>Apply for Approval</span>
               </button>
 
 
-              <button className="service-card">
+              <button className="service-card" onClick={() => navigate("/student/complaints")}>
                 <MessageCircle size={22} />
                 <span>Report a Complaint</span>
               </button>
 
 
-              <button className="service-card">
+              <button className="service-card" onClick={() => navigate("/student/bus")}>
                 <Bus size={22} />
                 <span>Campus Bus</span>
               </button>
 
 
-              <button className="service-card">
+              <button className="service-card" onClick={() => navigate("/student/ai")}>
                 <MessageCircle size={22} />
                 <span>Ask AI Assistant</span>
               </button>

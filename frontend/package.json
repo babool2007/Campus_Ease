@@ -1,0 +1,12 @@
+{
+  "name": "campusease-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CampusEase Frontend Root Runner",
+  "scripts": {
+    "dev": "npm --prefix CampusEase/frontend run dev",
+    "build": "npm --prefix CampusEase/frontend run build",
+    "preview": "npm --prefix CampusEase/frontend run preview",
+    "lint": "npm --prefix CampusEase/frontend run lint"
+  }
+}
